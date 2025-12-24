@@ -16,6 +16,12 @@ public:
     Rank getRank() const;
     Suit getSuit() const;
 
+    bool operator<(const Card& other) const;
+    bool operator>(const Card& other) const;
+
+    static bool compareByRank(const Card& a, const Card& b);
+    static bool compareBySuit(const Card& a, const Card& b);
+
     ~Card() = default;
 };
 
