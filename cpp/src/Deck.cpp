@@ -10,24 +10,24 @@ Deck::Deck() : currentIndex(0) {
         }
     }
     shuffle();
-};
+}
 
 void Deck::shuffle() {
     random_device rd;
     mt19937 gen(rd());
 
     std::shuffle(cards.begin(), cards.end(), gen);
-};
+}
 
 Card Deck::dealCard() {
     if (isEmpty) throw runtime_error("Deck is empty");
     return cards[currentIndex++];
-};
+}
 
 size_t Deck::cardsRemaining() {
     return cards.size() - currentIndex;
-};
+}
 
 bool Deck::isEmpty() {
     return currentIndex >= cards.size();
-};
+}
