@@ -3,6 +3,7 @@
  
 #include "Rank.hpp"
 #include "Suit.hpp"
+#include <string>
 
 class Card
 {
@@ -21,6 +22,8 @@ public:
 
     static bool compareByRank(const Card& a, const Card& b);
     static bool compareBySuit(const Card& a, const Card& b);
+
+    std::string toString() const;
 
     ~Card() = default;
 };

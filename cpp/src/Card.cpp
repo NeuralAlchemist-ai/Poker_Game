@@ -1,4 +1,5 @@
 #include "Card.hpp"
+using namespace std;
 
 Card::Card(Rank r, Suit s) : rank(r), suit(s) {}
 
@@ -32,4 +33,17 @@ bool Card::compareBySuit(const Card& a, const Card& b) {
     }
 
     return a.rank < b.rank;
+}
+
+string Card::toString() const {
+    static const string rankStrings[] = {
+        "2", "3", "4", "5", "6", "7", "8", "9", "10",
+        "J", "Q", "K", "A"
+    };
+
+    static const string suitStrings[] = {
+        "♠", "♥", "♣", "♦"
+    };
+
+    return rankStrings[static_cast<int>(rank)] + suitStrings[static_cast<int>(suit)];
 }
