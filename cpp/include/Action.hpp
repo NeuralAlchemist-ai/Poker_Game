@@ -2,7 +2,7 @@
 #define ACTION_HPP
 
 enum class Action { 
-    FOLD, CHECK, CALL, BET, RAISE, ALL_IN
+    FOLD, CHECK, CALL, BET, RAISE, ALL_IN, NONE
 };
 
 struct Decision {
