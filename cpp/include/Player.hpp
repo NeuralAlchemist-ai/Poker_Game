@@ -3,6 +3,7 @@
 
 #include "Hand.hpp"
 #include "Action.hpp"
+#include "GameState.hpp"
 #include <string>
 
 class Player
@@ -59,7 +60,7 @@ public:
     void clearHand();
     void showHand() const; 
 
-    virtual Decision makeDecision(int minRaise) = 0;
+    virtual Decision makeDecision(const GameState& state) = 0;
 
     void recordHandPlayed(bool won, int profit);
     double getWinRate() const;
