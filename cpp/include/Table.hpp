@@ -9,6 +9,7 @@ class Table
 private:
     std::vector<Card> cards;
     int pot;
+    int sidePot;
     int currentBet;
 
 public:
