@@ -10,6 +10,7 @@ private:
     std::vector<Card> cards;
     int pot;
     int sidePot;
+    bool sidePotUsed;
     int currentBet;
 
 public:
@@ -24,11 +25,18 @@ public:
     void clear();
     std::size_t cardCount() const;
 
-    void addToPot(int amount);
     int getPot() const;
-    void resetPot();
-    void setCurrentBet(int bet); 
+    int getSidePot() const;
+    bool getSidePotUsed() const;
     int getCurrentBet() const; 
+    
+    void setSidePotUsed(bool used);
+    void setCurrentBet(int bet); 
+
+    void addToPot(int amount);
+    void addToSidePot(int amount);
+    void resetPot();
+    void resetSidePot();
 
     bool hasFlop() const;
     bool hasTurn() const;
