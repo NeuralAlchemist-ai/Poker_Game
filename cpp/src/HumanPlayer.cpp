@@ -5,7 +5,8 @@
 
 using namespace std;
 
-Decision HumanPlayer::makeDecision(int minRaise) {
+Decision HumanPlayer::makeDecision(const GameState& state) {
+    int minRaise = state.minRaise;
     Decision decision{};
     char d = '\0';
 
