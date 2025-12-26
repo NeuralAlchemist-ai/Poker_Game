@@ -53,21 +53,25 @@ size_t Table::cardCount() const {
     return cards.size();
 }
 
-void Table::addToPot(int amount) {
-    if (amount < 0) {
-        throw invalid_argument("Cannot add negative amount to pot");
-    }
-    pot += amount;
-}
-
 int Table::getPot() const {
     return pot;
 }
 
-void Table::resetPot() {
-    pot = 0;
-    currentBet = 0;
+int Table::getSidePot() const {
+    return sidePot;
 }
+
+bool Table::getSidePotUsed() const {
+    return sidePotUsed;
+}
+ 
+int Table::getCurrentBet() const {
+    return currentBet;
+}
+
+void Table::setSidePotUsed(bool used) {
+    sidePotUsed = used;
+} 
 
 void Table::setCurrentBet(int bet) {
     if (bet < 0) {
@@ -76,8 +80,28 @@ void Table::setCurrentBet(int bet) {
     currentBet = bet;
 }
 
-int Table::getCurrentBet() const {
-    return currentBet;
+void Table::addToPot(int amount) {
+    if (amount < 0) {
+        throw invalid_argument("Cannot add negative amount to pot");
+    }
+    pot += amount;
+}
+
+void Table::addToSidePot(int amount) {
+    if (amount < 0) {
+        throw invalid_argument("Cannot add negative amount to pot");
+    }
+    sidePot += amount;
+}
+
+void Table::resetPot() {
+    pot = 0;
+    currentBet = 0;
+}
+
+void  Table::resetSidePot() {
+    sidePot = 0;
+    currentBet = 0;
 }
 
 bool Table::hasFlop() const {
