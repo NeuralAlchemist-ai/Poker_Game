@@ -5,7 +5,7 @@
 
 class HumanPlayer : public Player 
 {
-    Decision makeDecision(int minRaise) override;
+    Decision makeDecision(const GameState& state) override;
 };
 
 #endif
