@@ -86,6 +86,7 @@ void Player::check() {
         throw logic_error("Cannot check");
     }
     lastAction = Action::CHECK;
+    cout << name << " checks\n";
 }
 
 void Player::call(int amount) {
@@ -95,6 +96,7 @@ void Player::call(int amount) {
         balance -= amount;
         currentBet += amount;
         lastAction = Action::CALL; 
+        cout << name << " calls\n";
     } else {
         throw runtime_error("You could not call as you have not enough money");
     }
@@ -107,6 +109,7 @@ void Player::bet(int amount) {
         balance -= amount;
         currentBet = amount;
         lastAction = Action::BET;
+        cout << name << " bets\n";
     } else {
         throw runtime_error("Not enough money");
     }
@@ -119,6 +122,7 @@ void Player::raise(int amount) {
         balance -= amount;
         currentBet += amount;
         lastAction = Action::RAISE;
+        cout << name << " raises\n";
     } else {
         throw runtime_error("Not enough money");
     }
@@ -130,6 +134,7 @@ void Player::allIn() {
         balance = 0;
         lastAction = Action::ALL_IN;
         isAllIn = true;
+        cout << name << " goes all-in\n";
     } else {
         throw runtime_error("You do not have money");
     }
