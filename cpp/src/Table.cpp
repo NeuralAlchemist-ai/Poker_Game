@@ -2,7 +2,7 @@
 #include <stdexcept>
 using namespace std;
 
-Table::Table() : pot(0), currentBet(0) {}
+Table::Table() : pot(0), sidePot(0), currentBet(0) {}
 
 void Table::addCard(const Card& card) {
     if (cards.size() < 5) {
