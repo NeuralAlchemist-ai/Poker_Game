@@ -18,6 +18,8 @@ private:
     bool isDealer;
     int position;
 
+    Action lastAction;
+
     int handsPlayed;
     int handsWon;
     int totalProfit;
@@ -35,14 +37,24 @@ public:
     bool isPlayerAllIn() const;
     bool isPlayerDealer() const;
     int getPosition() const;
+    Action getLastAction() const;
 
     void setActive(bool active);
     void setDealer(bool dealer);
     void setPosition(int pos);
 
+    void fold();
+    void check();
+    void call(int amount);
+    void bet(int amount);
+    void raise(int amount);
+    void allIn();
+
     void addToBalance(int amount);
     void subtractFromBalance(int amount);
     bool canAfford(int amount) const;
+
+    void resetLastAction();
 
     void clearHand();
     void showHand() const; 

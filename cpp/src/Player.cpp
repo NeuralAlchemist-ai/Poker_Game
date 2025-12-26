@@ -14,6 +14,8 @@ Player::Player(const string& playerName, int initialBalance)
       isDealer(false),
       position(-1),
 
+      lastAction(Action::NONE),
+
       handsPlayed(0),
       handsWon(0),
       totalProfit(0)
@@ -55,6 +57,10 @@ int Player::getPosition() const {
     return position;
 }
 
+Action Player::getLastAction() const {
+    return lastAction;
+}
+
 void Player::setActive(bool active) {
     isActive = active;
 }
@@ -66,6 +72,67 @@ void Player::setDealer(bool dealer) {
 
 void Player::setPosition(int pos) {
     position = pos;
+}
+
+void Player::fold() {
+    hasFolded = true;
+    isActive = false;
+    lastAction = Action::FOLD;
+    cout << name << " folds\n";
+}
+
+void Player::check() {
+    if (hasFolded || isAllIn) {
+        throw logic_error("Cannot check");
+    }
+    lastAction = Action::CHECK;
+}
+
+void Player::call(int amount) {
+    if (amount < 0) throw invalid_argument("You could not call with negative amount");
+
+    if (amount <= balance) {
+        balance -= amount;
+        currentBet += amount;
+        lastAction = Action::CALL; 
+    } else {
+        throw runtime_error("You could not call as you have not enough money");
+    }
+}
+
+void Player::bet(int amount) {
+    if (amount < 0) throw invalid_argument("You could not bet with negative amount");
+
+    if (amount <= balance) {
+        balance -= amount;
+        currentBet = amount;
+        lastAction = Action::BET;
+    } else {
+        throw runtime_error("Not enough money");
+    }
+}
+
+void Player::raise(int amount) {
+    if (amount < 0) throw invalid_argument("You could not raise with negative amount");
+
+    if (amount <= balance) {
+        balance -= amount;
+        currentBet += amount;
+        lastAction = Action::RAISE;
+    } else {
+        throw runtime_error("Not enough money");
+    }
+}
+
+void Player::allIn() {
+    if (balance > 0) {
+        currentBet += balance;
+        balance = 0;
+        lastAction = Action::ALL_IN;
+        isAllIn = true;
+    } else {
+        throw runtime_error("You do not have money");
+    }
 }
 
 void Player::addToBalance(int amount) {
@@ -87,6 +154,10 @@ void Player::subtractFromBalance(int amount) {
 
 bool Player::canAfford(int amount) const {
     return balance >= amount;
+}
+
+void Player::resetLastAction() {
+    lastAction = Action::NONE;
 }
 
 void Player::clearHand() {
