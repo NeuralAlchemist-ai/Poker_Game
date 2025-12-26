@@ -59,7 +59,7 @@ public:
     void clearHand();
     void showHand() const; 
 
-    // virtual Decision makeDecision(int currentBet, int minRaise) = 0;
+    virtual Decision makeDecision(int currentBet, int minRaise) = 0;
 
     void recordHandPlayed(bool won, int profit);
     double getWinRate() const;
