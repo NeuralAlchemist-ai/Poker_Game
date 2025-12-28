@@ -7,16 +7,17 @@
 class Deck
 {
 private:
-    vector<Card> cards;
+    std::vector<Card> cards;
     std::size_t currentIndex;
 
 public:
     Deck();
 
     void shuffle();
-    Card dealCard();
-    std::size_t cardsRemaining();
-    bool isEmpty();
+    Card draw();
+    void reset();
+    std::size_t cardsRemaining() const;
+    bool isEmpty() const;
 
     ~Deck() = default;
 };

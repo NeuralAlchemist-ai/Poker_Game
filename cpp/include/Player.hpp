@@ -60,6 +60,9 @@ public:
     void clearHand();
     void showHand() const; 
 
+    const Hand& getHand() const;
+    void receiveCard(const Card& card);
+
     virtual Decision makeDecision(const GameState& state) = 0;
 
     void recordHandPlayed(bool won, int profit);

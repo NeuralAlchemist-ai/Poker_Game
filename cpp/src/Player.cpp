@@ -173,6 +173,14 @@ void Player::clearHand() {
     isAllIn = false;
 }
 
+const Hand& Player::getHand() const {
+    return hand;
+}
+
+void Player::receiveCard(const Card& card) {
+    hand.addCard(card);
+}
+
 void Player::showHand() const {
     cout << name << "'s hand: ";
 

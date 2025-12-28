@@ -1,6 +1,7 @@
 #include "Deck.hpp"
 #include <algorithm>
 #include <random>
+#include <stdexcept>
 using namespace std;
 
 Deck::Deck() : currentIndex(0) {
@@ -19,15 +20,20 @@ void Deck::shuffle() {
     std::shuffle(cards.begin(), cards.end(), gen);
 }
 
-Card Deck::dealCard() {
-    if (isEmpty) throw runtime_error("Deck is empty");
+Card Deck::draw() {
+    if (isEmpty()) throw runtime_error("Deck is empty");
     return cards[currentIndex++];
 }
 
-size_t Deck::cardsRemaining() {
+void Deck::reset() {
+    currentIndex = 0;
+    shuffle();
+}
+
+size_t Deck::cardsRemaining() const {
     return cards.size() - currentIndex;
 }
 
-bool Deck::isEmpty() {
+bool Deck::isEmpty() const {
     return currentIndex >= cards.size();
 }
