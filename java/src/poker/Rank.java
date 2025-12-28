@@ -1,4 +1,4 @@
-package com.poker.model;
+package com.poker;
 
 public enum Rank {
     TWO(2, "2"),
@@ -14,28 +14,28 @@ public enum Rank {
     QUEEN(12, "Q"),
     KING(13, "K"),
     ACE(14, "A");
-    
+
     private final int value;
     private final String symbol;
-    
+
     Rank(int value, String symbol) {
         this.value = value;
         this.symbol = symbol;
     }
-    
+
     public int getValue() {
         return value;
     }
-    
+
     public String getSymbol() {
         return symbol;
     }
-    
+
     @Override
     public String toString() {
         return symbol;
     }
-    
+
     public static Rank fromSymbol(String symbol) {
         for (Rank rank : values()) {
             if (rank.symbol.equals(symbol)) {

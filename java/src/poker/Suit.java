@@ -1,4 +1,4 @@
-package com.poker.model;
+package com.poker;
 
 public enum Suit {
     HEARTS("H", "♥"),
@@ -6,30 +6,32 @@ public enum Suit {
     CLUBS("C", "♣"),
     SPADES("S", "♠");
 
-private final String name;
-private final String img;
+    private final String symbol;
+    private final String unicode;
 
-Suit(String name,String img){
-    this.name=name;
-    this.img=img;
-}
-    public String getName(){
-        return name;
+    Suit(String symbol, String unicode) {
+        this.symbol = symbol;
+        this.unicode = unicode;
     }
-    public String getImage(){
-        return img;
+
+    public String getSymbol() {
+        return symbol;
     }
-@Override
-public String toString(){
-    return img;
-}
-public static Suit fromImg(String img){
-    for (Suit suit : values()){
-        if (suit.img.equals(img)){
-            return suit;
+
+    public String getUnicodeSymbol() {
+        return unicode;
+    }
+
+    @Override
+    public String toString() {
+        return symbol;
+    }
+
+    public static Suit fromSymbol(String sym) {
+        for (Suit s : values()) {
+            if (s.symbol.equals(sym)) return s;
         }
+        throw new IllegalArgumentException("Invalid suit symbol: " + sym);
     }
-    throw new IllegalArgumentException("Invalid suit symbol: " + img);
-}
 }
 

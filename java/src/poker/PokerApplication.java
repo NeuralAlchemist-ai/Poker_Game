@@ -1,5 +1,6 @@
 package com.poker;
 import java.util.*;
+import java.io.IOException;
 
 public class PokerApplication {
     private HumanPlayer player1;
@@ -13,6 +14,7 @@ public class PokerApplication {
     private int bigBlind = 20;
     private FileManager fileManager;
     private Scanner scanner;
+    private CppEvaluator cppEval;
    
     public PokerApplication() {
         this.communityCards = new ArrayList<>();
@@ -21,6 +23,11 @@ public class PokerApplication {
         this.dealerPosition = 0;
         this.fileManager = new FileManager();
         this.scanner = new Scanner(System.in);
+        try {
+            this.cppEval = new CppEvaluator();
+        } catch (Exception e) {
+            this.cppEval = null;
+        }
     }
    
     public void start() {
@@ -294,19 +301,52 @@ public class PokerApplication {
         }
         System.out.println("\n");
        
-        int score1 = evaluateHand(player1);
-        int score2 = evaluateHand(player2);
-       
-        if (score1 > score2) {
-            System.out.println(player1.getName() + " wins $" + pot + "!");
-            player1.winPot(pot);
-        } else if (score2 > score1) {
-            System.out.println(player2.getName() + " wins $" + pot + "!");
-            player2.winPot(pot);
-        } else {
-            System.out.println("Split pot! Each player gets $" + (pot / 2));
-            player1.winPot(pot / 2);
-            player2.winPot(pot / 2);
+        try {
+            if (cppEval != null) {
+                int winner = cppEval.evaluate(player1.getHand(), player2.getHand(), communityCards);
+                if (winner == 1) {
+                    System.out.println(player1.getName() + " wins $" + pot + "!");
+                    player1.winPot(pot);
+                } else if (winner == 2) {
+                    System.out.println(player2.getName() + " wins $" + pot + "!");
+                    player2.winPot(pot);
+                } else {
+                    System.out.println("Split pot! Each player gets $" + (pot / 2));
+                    player1.winPot(pot / 2);
+                    player2.winPot(pot / 2);
+                }
+            } else {
+                int score1 = evaluateHand(player1);
+                int score2 = evaluateHand(player2);
+
+                if (score1 > score2) {
+                    System.out.println(player1.getName() + " wins $" + pot + "!");
+                    player1.winPot(pot);
+                } else if (score2 > score1) {
+                    System.out.println(player2.getName() + " wins $" + pot + "!");
+                    player2.winPot(pot);
+                } else {
+                    System.out.println("Split pot! Each player gets $" + (pot / 2));
+                    player1.winPot(pot / 2);
+                    player2.winPot(pot / 2);
+                }
+            }
+        } catch (Exception e) {
+            // Fallback to Java evaluation on error
+            int score1 = evaluateHand(player1);
+            int score2 = evaluateHand(player2);
+
+            if (score1 > score2) {
+                System.out.println(player1.getName() + " wins $" + pot + "!");
+                player1.winPot(pot);
+            } else if (score2 > score1) {
+                System.out.println(player2.getName() + " wins $" + pot + "!");
+                player2.winPot(pot);
+            } else {
+                System.out.println("Split pot! Each player gets $" + (pot / 2));
+                player1.winPot(pot / 2);
+                player2.winPot(pot / 2);
+            }
         }
        
         pressEnterToContinue();
@@ -457,9 +497,12 @@ public class PokerApplication {
    
     public void exit() {
         System.out.println("\nThanks for playing!");
-        player1.cleanup();
-        player2.cleanup();
+        if (player1 != null) player1.cleanup();
+        if (player2 != null) player2.cleanup();
         scanner.close();
+        if (cppEval != null) {
+            try { cppEval.close(); } catch (Exception e) {}
+        }
         System.exit(0);
     }
    
