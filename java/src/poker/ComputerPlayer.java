@@ -29,6 +29,9 @@ public class ComputerPlayer extends Player {
         
         if (handStrength < 0.2 && callAmount > chips * 0.1) {
             return "FOLD";
+        }
+        if (callAmount > chips) {
+            return "ALL_IN";
         } else if (aggressionFactor > 1.2 && chips > callAmount + minRaise) {
             int raiseAmount = (int)(minRaise * (1 + daringLevel));
             int totalBet = currentBet + Math.min(raiseAmount, chips - callAmount);
@@ -38,6 +41,7 @@ public class ComputerPlayer extends Player {
         } else if (callAmount <= chips && handStrength > 0.3) {
             return "CALL:" + callAmount;
         } else {
+            if (chips <= potAmount * 0.2 && random.nextDouble() < daringLevel) return "ALL_IN";
             return "FOLD";
         }
     }

@@ -36,8 +36,9 @@ public class HumanPlayer extends Player {
             System.out.println("2. Call ($" + callAmount + ")");
         }
         System.out.println("3. Raise");
+        System.out.println("4. All-in");
         
-        System.out.print("\nEnter your choice (1-3): ");
+        System.out.print("\nEnter your choice (1-4): ");
         
         int choice = 0;
         try {
@@ -73,7 +74,10 @@ public class HumanPlayer extends Player {
                     int amountNeeded = totalBet - this.currentBet;
                     
                     if (amountNeeded > chips) {
-                        System.out.println("Not enough chips!");
+                        System.out.println("Not enough chips! You can go all-in instead.");
+                        System.out.print("Do you want to go all-in for $" + chips + "? (y/N): ");
+                        String resp = scanner.nextLine().trim().toLowerCase();
+                        if (resp.equals("y") || resp.equals("yes")) return "ALL_IN";
                         return makeDecision(potAmount, currentBet, minRaise);
                     }
                     
@@ -83,6 +87,8 @@ public class HumanPlayer extends Player {
                     System.out.println("Invalid input. Please try again.");
                     return makeDecision(potAmount, currentBet, minRaise);
                 }
+            case 4:
+                return "ALL_IN";
             default:
                 System.out.println("Invalid choice. Please try again.");
                 return makeDecision(potAmount, currentBet, minRaise);

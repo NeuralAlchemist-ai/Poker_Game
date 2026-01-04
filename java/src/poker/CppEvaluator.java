@@ -22,7 +22,6 @@ public class CppEvaluator {
     }
 
     public int evaluate(List<Card> p1, List<Card> p2, List<Card> community) throws IOException {
-        // format: EVAL p1;p2;comm
         StringBuilder sb = new StringBuilder();
         sb.append("EVAL ");
 
@@ -44,7 +43,6 @@ public class CppEvaluator {
     }
 
     private String cardToCode(Card c) {
-        // produce e.g. AS, TH using Rank's symbol
         String sym = null;
         try {
             sym = c.getRank().getSymbol();
