@@ -79,6 +79,10 @@ public class PokerApplication {
                     int activeCount=0; Player last=null; for (Player p: players) if (p.getChips()>0) { activeCount++; last=p; }
                     if (activeCount<=1) { if (last!=null) declareWinner(last); break; }
                     playHand();
+                    
+                    activeCount=0; last=null; for (Player p: players) if (p.getChips()>0) { activeCount++; last=p; }
+                    if (activeCount<=1) { if (last!=null) declareWinner(last); break; }
+                    
                     System.out.println("\n=== Hand Complete ===");
                     for (Player p: players) System.out.println(p.getName() + ": $" + p.getChips());
                     System.out.println("\nOptions:"); System.out.println("1. Play next hand"); System.out.println("2. Save game"); System.out.println("3. Return to main menu"); System.out.print("\nChoice: ");
@@ -89,7 +93,7 @@ public class PokerApplication {
 
             private void playHand() {
                 for (Player p: players) p.resetForNewHand(); communityCards.clear(); pot=0; currentBet=0;
-                clearScreen(); System.out.println("\n╔════════════════════════════════════════╗"); System.out.println("║ STARTING NEW HAND ║"); System.out.println("╚════════════════════════════════════════╝\n");
+                clearScreen(); System.out.println("\n╔════════════════════════════════════════╗"); System.out.println("║           STARTING NEW HAND            ║"); System.out.println("╚════════════════════════════════════════╝\n");
                 int num = players.size(); int dealer = dealerPosition % num; int sb = (dealer+1)%num; int bb=(dealer+2)%num;
                 System.out.println("Dealer: " + players.get(dealer).getName()); System.out.println("Small Blind ($"+smallBlind+"): " + players.get(sb).getName()); System.out.println("Big Blind ($"+bigBlind+"): " + players.get(bb).getName());
                 try { players.get(sb).bet(smallBlind); } catch (Exception e) { players.get(sb).bet(players.get(sb).getChips()); }
@@ -231,6 +235,20 @@ public class PokerApplication {
 
             private void endHandWithSidePots() {
                 clearScreen(); System.out.println("\n=== HAND RESULT ===\n");
+                
+                System.out.println("╔════════════════════════════════════════╗");
+                System.out.print("║ Community cards: ");
+                if (communityCards.isEmpty()) { System.out.println("(none)                ║"); }
+                else { for (Card c: communityCards) System.out.print(c.toDisplayString()+" "); System.out.println("       ║"); }
+                System.out.println("╚════════════════════════════════════════╝\n");
+                
+                for (Player p: players) {
+                    System.out.print(p.getName() + ": ");
+                    if (p.hasFolded()) { System.out.println("(folded)"); }
+                    else { for (Card c: p.getHand()) System.out.print(c.toDisplayString()+" "); System.out.println(); }
+                }
+                System.out.println();
+                
                 Map<Player,Integer> contrib = new LinkedHashMap<>();
                 int totalContrib = 0;
                 for (Player p: players) { contrib.put(p, p.getCurrentBet()); totalContrib += p.getCurrentBet(); }
@@ -302,7 +320,7 @@ public class PokerApplication {
             }
 
             private void declareWinner(Player winner) {
-                clearScreen(); System.out.println("\n╔════════════════════════════════════════╗"); System.out.println("║ GAME OVER! ║"); System.out.println("╚════════════════════════════════════════╝\n"); System.out.println(winner.getName() + " wins the game!"); System.out.println("Final chips: $" + winner.getChips()); pressEnterToContinue();
+                clearScreen(); System.out.println("\n╔════════════════════════════════════════╗"); System.out.println("║ GAME OVER!                             ║"); System.out.println("╚════════════════════════════════════════╝\n"); System.out.println(winner.getName() + " wins the game!"); System.out.println("Final chips: $" + winner.getChips()); pressEnterToContinue();
             }
 
             public void exit() {
