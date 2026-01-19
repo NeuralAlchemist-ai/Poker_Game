@@ -24,3 +24,7 @@ You can override the path with environment variable `POKER_ENGINE_PATH`.
 
 If the C++ engine is not available the Java application will fallback to its internal evaluator.
 
+##Contributors:
+- Tsimur Bardziyan
+- Andrii Pikuza
+- Liu Yutong
