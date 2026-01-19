@@ -89,7 +89,7 @@ public class PokerApplication {
 
             private void playHand() {
                 for (Player p: players) p.resetForNewHand(); communityCards.clear(); pot=0; currentBet=0;
-                clearScreen(); System.out.println("\n╔════════════════════════════════════════╗"); System.out.println("║ STARTING NEW HAND ║"); System.out.println("╚════════════════════════════════════════╝\n");
+                clearScreen(); System.out.println("\n╔════════════════════════════════════════╗"); System.out.println("║           STARTING NEW HAND            ║"); System.out.println("╚════════════════════════════════════════╝\n");
                 int num = players.size(); int dealer = dealerPosition % num; int sb = (dealer+1)%num; int bb=(dealer+2)%num;
                 System.out.println("Dealer: " + players.get(dealer).getName()); System.out.println("Small Blind ($"+smallBlind+"): " + players.get(sb).getName()); System.out.println("Big Blind ($"+bigBlind+"): " + players.get(bb).getName());
                 try { players.get(sb).bet(smallBlind); } catch (Exception e) { players.get(sb).bet(players.get(sb).getChips()); }
